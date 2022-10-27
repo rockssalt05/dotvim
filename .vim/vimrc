@@ -1,0 +1,16 @@
+call plug#begin()
+	Plug 'luochen1990/rainbow'
+	Plug 'neoclide/coc.nvim', {'branch': 'release'}
+call plug#end()
+
+set linebreak
+set breakindent
+
+set tabstop=4
+set shiftwidth=0
+
+set number
+set termguicolors
+colorscheme codedark
+
+let g:rainbow_active = 0

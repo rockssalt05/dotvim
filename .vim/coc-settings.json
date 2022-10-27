@@ -1,0 +1,5 @@
+{
+	"semanticTokens.filetypes": ["*"],
+	"clangd.arguments": ["-header-insertion=never"],
+	"clangd.fallbackFlags": ["-I../../dep", "-I../../dep/glfw/include", "-I../../dep/glad/include", "-I../lib", "-I../lib/glfw/include", "-I../lib/glad/include"]
+}
