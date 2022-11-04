@@ -1,6 +1,8 @@
 call plug#begin()
 	Plug 'luochen1990/rainbow'
 	Plug 'neoclide/coc.nvim', {'branch': 'release'}
+	"to install coc.clangd: 'CocInstall coc-clangd'
+	"to install clangd: 'CocCommand clangd.install'
 call plug#end()
 
 set linebreak
