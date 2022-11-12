@@ -16,7 +16,3 @@ set termguicolors
 colorscheme codedark
 
 let g:rainbow_active = 0
-"these lines are for me you can remove them
-"https://drive.google.com/uc?id=1tOoN-E-eED7kpg5pVEuYA84aP5P2GqNx&amp;export=download
-"https://drive.google.com/open?id=1tOoN-E-eED7kpg5pVEuYA84aP5P2GqNx
-"https://www.cavestory.org/saves/01-013.zip
