@@ -1,18 +1,41 @@
 call plug#begin()
-	Plug 'luochen1990/rainbow'
 	Plug 'neoclide/coc.nvim', {'branch': 'release'}
-	"to install coc.clangd: 'CocInstall coc-clangd'
-	"to install clangd: 'CocCommand clangd.install'
+	Plug 'preservim/nerdtree'
+	"Plug 'ycm-core/YouCompleteMe'
+	"Plug 'dense-analysis/ale'
 call plug#end()
-
-set linebreak
-set breakindent
 
 set tabstop=4
 set shiftwidth=0
 
+set linebreak
+set breakindent
+
 set number
 set termguicolors
 colorscheme codedark
+set splitbelow
 
-let g:rainbow_active = 0
+function KillTerm()
+	let buf = uniq(map(filter(getwininfo(),
+		\"v:val.terminal"), "v:val.bufnr"))[-1]
+	execute "bd" buf
+endfunction
+
+function RunCmd()
+	let cmd = ""
+	if (&ft == "c")
+		let cmd = "gcc -Wall -o %<.out % && ./%<.out"
+	elseif (&ft == "cpp")
+		let cmd =  "g++ -Wall -o %<.out % && ./%<.out"
+	elseif (&ft == "python")
+		let cmd = "python3 %"
+	endif
+	if (cmd != "")
+		call KillTerm()
+		execute "term ++shell ++rows=10" cmd
+	endif
+endfunction
+
+map <silent> <F4> :silent! call KillTerm() <CR>
+map <silent> <F5> :silent! call RunCmd() <CR>
