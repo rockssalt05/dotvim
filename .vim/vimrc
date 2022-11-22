@@ -19,10 +19,11 @@ set splitbelow
 function KillTerm()
 	let buf = uniq(map(filter(getwininfo(),
 		\"v:val.terminal"), "v:val.bufnr"))[-1]
-	execute "bd" buf
+	execute "bd!" buf
 endfunction
 
 function RunCmd()
+	call KillTerm()
 	let cmd = ""
 	if (&ft == "c")
 		let cmd = "gcc -Wall -o %<.out % && ./%<.out"
@@ -32,7 +33,6 @@ function RunCmd()
 		let cmd = "python3 %"
 	endif
 	if (cmd != "")
-		call KillTerm()
 		execute "term ++shell ++rows=10" cmd
 	endif
 endfunction
