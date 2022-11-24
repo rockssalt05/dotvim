@@ -629,3 +629,6 @@ call <sid>hi('CmpItemKindUnit', s:cdFront, {}, 'none', {})
 
 " extra
 call <sid>hi('CocSemMacro', s:cdBlue, {}, 'none', {})
+call <sid>hi('StatusLineTerm', s:cdFront, s:cdLeftMid, 'none', {})
+call <sid>hi('StatusLineTermNC', s:cdFront, s:cdLeftDark, 'none', {})
+
