@@ -33,7 +33,7 @@ function RunCmd()
 		let cmd = "python3 %"
 	endif
 	if (cmd != "")
-		execute "term ++shell ++rows=10" cmd
+		execute "w | term ++shell ++rows=10" cmd
 	endif
 endfunction
 
