@@ -1,5 +1,11 @@
 {
 	"semanticTokens.filetypes": ["*"],
 	"clangd.arguments": ["-header-insertion=never"],
-	"clangd.fallbackFlags": ["-I../../dep", "-I../../dep/glfw/include", "-I../../dep/glad/include", "-I../lib", "-I../lib/glfw/include", "-I../lib/glad/include"]
+	"clangd.fallbackFlags": [
+		"-I../../lib",
+		"-I../../lib/glad/include",
+		"-I../../lib/glfw/include",
+		"-I../lib/SDL2/include",
+		"-I../lib/box2d/include"
+	]
 }

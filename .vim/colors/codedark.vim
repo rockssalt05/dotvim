@@ -173,7 +173,9 @@ call <sid>hi('Question', s:cdBlue, s:cdBack, 'none', {})
 call <sid>hi('Search', s:cdNone, s:cdSearch, 'none', {})
 call <sid>hi('SpecialKey', s:cdBlue, s:cdNone, 'none', {})
 call <sid>hi('StatusLine', s:cdFront, s:cdLeftMid, 'none', {})
+call <sid>hi('StatusLineTerm', s:cdFront, s:cdLeftMid, 'none', {})
 call <sid>hi('StatusLineNC', s:cdFront, s:cdLeftDark, 'none', {})
+call <sid>hi('StatusLineTermNC', s:cdFront, s:cdLeftDark, 'none', {})
 call <sid>hi('TabLine', s:cdFront, s:cdTabOther, 'none', {})
 call <sid>hi('TabLineFill', s:cdFront, s:cdTabOutside, 'none', {})
 call <sid>hi('TabLineSel', s:cdFront, s:cdTabCurrent, 'none', {})
@@ -249,7 +251,7 @@ call <sid>hi('TSPunctSpecial', s:cdFront, {}, 'none', {})
 " Constant
 call <sid>hi('TSConstant', s:cdYellow, {}, 'none', {})
 call <sid>hi('TSConstBuiltin', s:cdBlue, {}, 'none', {})
-call <sid>hi('TSConstMacro', s:cdBlueGreen, {}, 'none', {})
+call <sid>hi('TSConstMacro', s:cdBlue, {}, 'none', {})
 call <sid>hi('TSStringRegex', s:cdOrange, {}, 'none', {})
 call <sid>hi('TSString', s:cdOrange, {}, 'none', {})
 call <sid>hi('TSStringEscape', s:cdYellowOrange, {}, 'none', {})
@@ -628,7 +630,11 @@ call <sid>hi('CmpItemKindProperty', s:cdFront, {}, 'none', {})
 call <sid>hi('CmpItemKindUnit', s:cdFront, {}, 'none', {})
 
 " extra
-call <sid>hi('CocSemMacro', s:cdBlue, {}, 'none', {})
-call <sid>hi('StatusLineTerm', s:cdFront, s:cdLeftMid, 'none', {})
-call <sid>hi('StatusLineTermNC', s:cdFront, s:cdLeftDark, 'none', {})
-
+let g:rainbow_conf = {
+\	'guifgs': [s:cdYellowOrange['gui'], s:cdPink['gui'], s:cdBlue['gui']],
+\	'ctermfgs': [s:cdYellowOrange['cterm'], s:cdPink['cterm'], s:cdBlue['cterm']],
+\	'operators': '',
+\	'separately': {
+\		'cmake': 0
+\	}
+\}

@@ -1,41 +1,70 @@
+let g:plug_window = 'above split new'
 call plug#begin()
 	Plug 'neoclide/coc.nvim', {'branch': 'release'}
-	Plug 'preservim/nerdtree'
-	"Plug 'ycm-core/YouCompleteMe'
-	"Plug 'dense-analysis/ale'
+	Plug 'jiangmiao/auto-pairs'
+	Plug 'luochen1990/rainbow'
+	let g:rainbow_active = 1
 call plug#end()
 
 set tabstop=4
 set shiftwidth=0
-
 set linebreak
 set breakindent
-
 set number
+set signcolumn=yes
 set termguicolors
 colorscheme codedark
 set splitbelow
 
-function KillTerm()
-	let buf = uniq(map(filter(getwininfo(),
-		\"v:val.terminal"), "v:val.bufnr"))[-1]
-	execute "bd!" buf
+set undofile
+let $vimdir = expand("<sfile>:h")
+if !isdirectory($vimdir.."/undo")
+	call mkdir($vimdir.."/undo", "", 0700)
+endif
+set undodir=$vimdir/undo
+
+let g:netrw_banner = 0
+
+let mapleader = " "
+map <silent> <leader>r :call RunFile()<CR>
+map <silent> <leader>e :call CloseTerminal()<CR>
+
+if !exists("g:os")
+	if has("win64") || has("win32") || has("win16")
+  	let g:os = "Windows"
+	else
+  	let g:os = substitute(system('uname'), '\n', '', '')
+	endif
+endif
+
+function RunFile()
+	let cmd = {
+	\	"c": "gcc -Wall -o %:t:r %:t && ./%:t:r",
+	\	"cpp": "g++ -Wall -o %:t:r %:t && ./%:t:r",
+	\	"python": "python3 %:t",
+	\	"sh": "bash %:t"
+	\}
+
+	call CloseTerminal()
+	if exists("cmd[&ft]")
+		if has("terminal")
+			let shell = "sh -c"
+			if g:os == "Windows"
+				let shell = "cmd /c"
+			endif
+			execute "up | term ++rows=10" shell "\"cd %:p:h && "..cmd[&ft].."\""
+		else
+			execute "up | !"..cmd[&ft]
+		endif
+	endif
 endfunction
 
-function RunCmd()
-	call KillTerm()
-	let cmd = ""
-	if (&ft == "c")
-		let cmd = "gcc -Wall -o %<.out % && ./%<.out"
-	elseif (&ft == "cpp")
-		let cmd =  "g++ -Wall -o %<.out % && ./%<.out"
-	elseif (&ft == "python")
-		let cmd = "python3 %"
-	endif
-	if (cmd != "")
-		execute "w | term ++shell ++rows=10" cmd
+function CloseTerminal()
+	if has("terminal")
+		let buf = uniq(map(filter(getwininfo(),
+			\"v:val.terminal"), "v:val.bufnr"))
+		if len(buf) != 0
+			execute "bd!" buf[-1]
+		endif
 	endif
 endfunction
-
-map <silent> <F4> :silent! call KillTerm() <CR>
-map <silent> <F5> :silent! call RunCmd() <CR>
