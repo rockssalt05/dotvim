@@ -52,7 +52,7 @@ function RunFile()
 			if g:os == "Windows"
 				let shell = "cmd /c"
 			endif
-			execute "up | term ++rows=10" shell "\"cd %:p:h && "..cmd[&ft].."\""
+			execute "up | term ++rows=10" shell "\"cd \\\"%:p:h\\\" && "..cmd[&ft].."\""
 		else
 			execute "up | !"..cmd[&ft]
 		endif
