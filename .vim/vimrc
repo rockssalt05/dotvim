@@ -17,11 +17,11 @@ colorscheme codedark
 set splitbelow
 
 set undofile
-let $vimdir = expand("<sfile>:h")
-if !isdirectory($vimdir.."/undo")
-	call mkdir($vimdir.."/undo", "", 0700)
+let $undodir = expand("<sfile>:h").."/undo"
+if !isdirectory($undodir)
+	call mkdir($undodir, "", 0700)
 endif
-set undodir=$vimdir/undo
+set undodir=$undodir
 
 let g:netrw_banner = 0
 
@@ -39,10 +39,10 @@ endif
 
 function RunFile()
 	let cmd = {
-	\	"c": "gcc -Wall -o %:t:r %:t && ./%:t:r",
-	\	"cpp": "g++ -Wall -o %:t:r %:t && ./%:t:r",
-	\	"python": "python3 %:t",
-	\	"sh": "bash %:t"
+	\	"c": "gcc -Wall -o '%:t:r' '%:t' && ./'%:t:r'",
+	\	"cpp": "g++ -Wall -o '%:t:r' '%:t' && ./'%:t:r'",
+	\	"python": "python3 '%:t'",
+	\	"sh": "bash '%:t'"
 	\}
 
 	call CloseTerminal()
@@ -52,9 +52,9 @@ function RunFile()
 			if g:os == "Windows"
 				let shell = "cmd /c"
 			endif
-			execute "up | term ++rows=10" shell "\"cd \\\"%:p:h\\\" && "..cmd[&ft].."\""
+			execute "up | term ++rows=10" shell "\"cd '%:~:.:h' &&" cmd[&ft] "\""
 		else
-			execute "up | !"..cmd[&ft]
+			execute "up | !cd '%:~:.:h' &&" cmd[&ft]
 		endif
 	endif
 endfunction
