@@ -1,4 +1,4 @@
-let g:plug_window = 'above split new'
+let g:plug_window = 'split new'
 call plug#begin()
 	Plug 'neoclide/coc.nvim', {'branch': 'release'}
 	Plug 'jiangmiao/auto-pairs'
@@ -38,23 +38,26 @@ if !exists("g:os")
 endif
 
 function RunFile()
+	let run = "./"
+	let shell = "sh -c"
+	if g:os == "Windows"
+		let run = ""
+		let shell = "cmd /c"
+	endif
+
 	let cmd = {
-	\	"c": "gcc -Wall -o '%:t:r' '%:t' && ./'%:t:r'",
-	\	"cpp": "g++ -Wall -o '%:t:r' '%:t' && ./'%:t:r'",
-	\	"python": "python3 '%:t'",
-	\	"sh": "bash '%:t'"
+	\	"c": "gcc -Wall -o \"%:t:r\" \"%:t\" && "..run.."\"%:t:r\"",
+	\	"cpp": "g++ -Wall -o \"%:t:r\" \"%:t\" && "..run.."\"%:t:r\"",
+	\	"python": "python3 \"%:t\"",
+	\	"sh": "bash \"%:t\""
 	\}
 
 	call CloseTerminal()
 	if exists("cmd[&ft]")
 		if has("terminal")
-			let shell = "sh -c"
-			if g:os == "Windows"
-				let shell = "cmd /c"
-			endif
-			execute "up | term ++rows=10" shell "\"cd '%:~:.:h' &&" cmd[&ft] "\""
+			execute "up | term ++rows=10" shell "\" cd \"%:~:.:h\" &&" cmd[&ft] "\""
 		else
-			execute "up | !cd '%:~:.:h' &&" cmd[&ft]
+			execute "up | !cd \"%:~:.:h\" &&" cmd[&ft]
 		endif
 	endif
 endfunction

@@ -635,6 +635,7 @@ let g:rainbow_conf = {
 \	'ctermfgs': [s:cdYellowOrange['cterm'], s:cdPink['cterm'], s:cdBlue['cterm']],
 \	'operators': '',
 \	'separately': {
+\		'text': 0,
 \		'cmake': 0
 \	}
 \}
