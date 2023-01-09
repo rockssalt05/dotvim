@@ -1,4 +1,4 @@
-let g:plug_window = 'split new'
+let g:plug_window = "new"
 call plug#begin()
 	Plug 'neoclide/coc.nvim', {'branch': 'release'}
 	Plug 'jiangmiao/auto-pairs'
@@ -33,7 +33,7 @@ if !exists("g:os")
 	if has("win64") || has("win32") || has("win16")
   	let g:os = "Windows"
 	else
-  	let g:os = substitute(system('uname'), '\n', '', '')
+  	let g:os = substitute(system("uname"), "\n", "", "")
 	endif
 endif
 
@@ -46,8 +46,8 @@ function RunFile()
 	endif
 
 	let cmd = {
-	\	"c": "gcc -Wall -o \"%:t:r\" \"%:t\" && "..run.."\"%:t:r\"",
-	\	"cpp": "g++ -Wall -o \"%:t:r\" \"%:t\" && "..run.."\"%:t:r\"",
+	\	"c": "gcc -Wall -o \"%:t:r\" \"%:t\" && "..l:run.."\"%:t:r\"",
+	\	"cpp": "g++ -Wall -o \"%:t:r\" \"%:t\" && "..l:run.."\"%:t:r\"",
 	\	"python": "python3 \"%:t\"",
 	\	"sh": "bash \"%:t\""
 	\}
@@ -55,9 +55,9 @@ function RunFile()
 	call CloseTerminal()
 	if exists("cmd[&ft]")
 		if has("terminal")
-			execute "up | term ++rows=10" shell "\" cd \"%:~:.:h\" &&" cmd[&ft] "\""
+			execute "up | term ++rows=10" shell "\" cd" expand("%:~:.:h") "&&" cmd[&ft] "\""
 		else
-			execute "up | !cd \"%:~:.:h\" &&" cmd[&ft]
+			execute "up | !cd" expand("%:~:.:h") "&&" cmd[&ft]
 		endif
 	endif
 endfunction
