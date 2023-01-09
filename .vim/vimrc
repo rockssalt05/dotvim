@@ -38,6 +38,9 @@ if !exists("g:os")
 endif
 
 function RunFile()
+	let dir = "\\\""..expand("%:~:.:h").."\\\""
+	let file = "\\\""..expand("%:t").."\\\""
+	let name = "\\\""..expand("%:t:r").."\\\""
 	let run = "./"
 	let shell = "sh -c"
 	if g:os == "Windows"
@@ -46,18 +49,18 @@ function RunFile()
 	endif
 
 	let cmd = {
-	\	"c": "gcc -Wall -o \"%:t:r\" \"%:t\" && "..l:run.."\"%:t:r\"",
-	\	"cpp": "g++ -Wall -o \"%:t:r\" \"%:t\" && "..l:run.."\"%:t:r\"",
-	\	"python": "python3 \"%:t\"",
-	\	"sh": "bash \"%:t\""
+	\	"c": "gcc -Wall -o "..l:name.." "..l:file.." && "..l:run..l:name,
+	\	"cpp": "g++ -Wall -o "..l:name.." "..l:file.." && "..l:run..l:name,
+	\	"python": "python3 "..l:file,
+	\	"sh": "bash "..l:file
 	\}
 
 	call CloseTerminal()
 	if exists("cmd[&ft]")
 		if has("terminal")
-			execute "up | term ++rows=10" shell "\" cd" expand("%:~:.:h") "&&" cmd[&ft] "\""
+			execute "up | term ++rows=10" shell "\" cd" dir "&&" cmd[&ft] "\""
 		else
-			execute "up | !cd" expand("%:~:.:h") "&&" cmd[&ft]
+			execute "up | !cd" dir "&&" cmd[&ft]
 		endif
 	endif
 endfunction
