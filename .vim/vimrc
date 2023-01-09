@@ -44,6 +44,9 @@ function RunFile()
 	let run = "./"
 	let shell = "sh -c"
 	if g:os == "Windows"
+		let dir = substitute(l:dir, "\\", "", "g")
+		let file = substitute(l:file, "\\", "", "g")
+		let name = substitute(l:name, "\\", "", "g")
 		let run = ""
 		let shell = "cmd /c"
 	endif
